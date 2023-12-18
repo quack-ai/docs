@@ -47,14 +47,19 @@
       "url": "home/introduction"
     },
     {
+      "name": "Quack platform",
+      "icon": "layer-group",
+      "url": "https://app.quackai.com/"
+    },
+    {
+      "name": "VSCode extension",
+      "icon": "laptop-code",
+      "url": "https://marketplace.visualstudio.com/items?itemName=quackai.quack-companion"
+    },
+    {
       "name": "Community",
       "icon": "discord",
       "url": "https://discord.gg/E9rY3bVCWd"
-    },
-    {
-      "name": "GitHub",
-      "icon": "github",
-      "url": "https://github.com/quack-ai/companion"
     },
     {
       "name": "Status page",
