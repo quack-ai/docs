@@ -10,9 +10,17 @@ With code generation getting commoditized, we'll need to allocate more efforts o
 ## What we handle for you
 
 Preparing your team for the next era of software engineering:
-- Creating a requestable representative for your engineering culture
-- Providing project-specific coding assistance 
-- Powering next generation developer tools with this same alignment
+<CardGroup cols={2}>
+<Card title="Engineering consistency" icon="1">
+  Creating a requestable representative for your engineering culture.
+</Card>
+<Card title="Team-specific coding assistance" icon="2">
+  Providing project-specific coding assistance.
+</Card>
+<Card title="Portable context for developer tools" icon="3">
+  Powering next generation developer tools with this same alignment.
+</Card>
+</CardGroup>
 
 ## What is left up to you
 
@@ -23,8 +31,41 @@ You make the decisions, we handle the compliance:
 
 ## How it works
 
-The current version of the system relies on two main pipelines:
-- Guideline curation & validation: parsing & confirming guidelines to build a useful context for AI-powered developer applications.
-- Coding assistance: producing or completing software-related content with context awareness.
+The current version of the system relies on two main pipelines that use deep learning models (namely language models, either instruction-tuned or completion-based).
 
-Both of these pipelines use deep learning models (namely language models, either instruction-tuned or completion-based).
+<AccordionGroup>
+  <Accordion title="Guideline curation & validation" icon="list">
+    Parsing & confirming guidelines to build a useful context for AI-powered developer applications.
+  </Accordion>
+
+  <Accordion title="Coding assistance" icon="keyboard">
+    Producing or completing software-related content with context awareness.
+  </Accordion>
+</AccordionGroup>
+
+From an architecture perspective now, here are all the system components:
+
+### Server resources
+
+<Card title="Guideline database" icon="database">
+  A PostgreSQL database to store and edit the coding guidelines of each project.
+</Card>
+<Card title="Deep learning models" icon="robot">
+  Either a third-party API like OpenAI or hosted models with coding capabilities.
+</Card>
+<Card title="Backend API" icon="globe">
+  The gatekeeper to the database and computing resources that manages access. Built with [FastAPI](https://fastapi.tiangolo.com/)
+</Card>
+<Card title="API monitoring" icon="magnifying-glass-chart">
+  Services to run analytics ([PostHog](https://posthog.com/)), error monitoring ([Sentry](https://sentry.io)), and notifications ([Slack](https://api.slack.com/)).
+</Card>
+
+### Client applications
+<CardGroup cols={2}>
+<Card title="Frontend platform" icon="gamepad" href="/content/components/card-group">
+  UI for guideline management, mostly for maintainers.
+</Card>
+<Card title="VSCode extension" icon="gamepad" href="/content/components/card-group">
+  Bringing code analysis and code completiong with relevant context to the developers/contributors.
+</Card>
+</CardGroup>
