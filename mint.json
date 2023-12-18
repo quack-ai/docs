@@ -131,5 +131,11 @@
       "apiKey": "phc_mU5797H4W1GELY5wmpxxSK9EWZyW4Eev5WZOtuqXMPE",
       "apiHost": "https://eu.posthog.com"
     }
+  },
+  "metadata": {
+    "og:title": "Quack documentation",
+    "og:description": "Make collaborative software development scale efficiently.",
+    "og:image": "https://www.quackai.com/social-banner.png",
+    "og:logo": "https://www.quackai.com/quack.png"
   }
 }
