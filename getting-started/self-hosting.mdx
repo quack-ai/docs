@@ -1,0 +1,183 @@
+---
+title: 'Self-Hosting'
+description: 'Host your Quack suite on your own'
+---
+
+## Prerequisites
+
+Before you start, please make sure you already have the following installed:
+1. [Docker](https://docs.docker.com/engine/install/) _(make sure you have docker compose as well)_
+2. [GitHub account](https://github.com/)
+3. [OpenAI API key](https://openai.com/blog/openai-api) _(easiest setup, but alternatives available)_
+4. [VS Code](https://code.visualstudio.com/)
+
+## Installation with Docker
+
+First of all, create a `.env` file where we'll put all the information you need. For now, put this in:
+```
+SUPERADMIN_GH_PAT=your-github-pat
+GH_OAUTH_ID=your-github-oauth-app-id
+GH_OAUTH_SECRET=your-github-oauth-app-secret
+OPENAI_API_KEY=your-openai-api-key
+SUPERADMIN_PWD='Dumm1PassW0rdz!'
+POSTGRES_DB=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD='An0th3rDumm1PassW0rdz!'
+```
+Replace the value of `OPENAI_API_KEY`, pick secure passwords for `SUPERADMIN_PWD` and `POSTGRES_PASSWORD`.
+
+### Backend API
+
+<Steps>
+  <Step title="GitHub PAT">
+    As the future admin of your service, you are the first one who will need authentication.
+    Head over to your [Developer settings](https://github.com/settings/tokens?type=beta) on GitHub, and "Generate new token", 
+    pick a name and an expiration and confirm with "Generate token". Save this so that we can put it in your `.env` File.
+  </Step>
+  <Step title="Environment variables">
+    Fill the value of `SUPERADMIN_GH_PAT` in your `.env` File.
+  </Step>
+  <Step title="Docker orchestration">
+    Let's create a a file named `docker-compose.yml` and put this in:
+```yaml
+version: '3.7'
+
+services:
+  backend:
+    image: quackai/contribution-api:latest
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8050 --proxy-headers
+    ports:
+      - "8050:8050"
+    environment:
+      - SUPERADMIN_GH_PAT=${SUPERADMIN_GH_PAT}
+      - SUPERADMIN_PWD=${SUPERADMIN_PWD}
+      - GH_OAUTH_ID=${GH_OAUTH_ID}
+      - GH_OAUTH_SECRET=${GH_OAUTH_SECRET}
+      - POSTGRES_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  postgres_data:
+```
+  </Step>
+  <Step title="Run the service">
+    Now simply run this snippet to start your service:
+    ```shell
+    docker compose up -d
+    ```
+  </Step>
+</Steps>
+
+### Frontend platform
+
+<Steps>
+  <Step title="GitHub OAuth app">
+    On GitHub, [create a new OAuth application](https://github.com/settings/applications/new).
+    Pick what you want for application name and homepage URL, but the callback has to point to your frontend service (e.g. `http://localhost:3000` for now).
+    Save the client ID, and create a new client secret that you should save as well.
+  </Step>
+  <Step title="Environment variables">
+    Fill the values of `GH_OAUTH_ID` and `GH_OAUTH_SECRET` in your `.env` file.
+  </Step>
+  <Step title="Docker orchestration">
+    Let's edit your `docker-compose.yml` to add the frontend service:
+```yaml
+version: '3.7'
+
+services:
+  frontend:
+    image: quackai/platform:latest
+    command: node server.js
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8050/api/v1
+      - NEXT_PUBLIC_REDIRECT_URI=http://localhost:3000
+    depends_on:
+      - backend
+  backend:
+    image: quackai/contribution-api:latest
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8050 --proxy-headers
+    ports:
+      - "8050:8050"
+    environment:
+      - SUPERADMIN_GH_PAT=${SUPERADMIN_GH_PAT}
+      - SUPERADMIN_PWD=${SUPERADMIN_PWD}
+      - GH_OAUTH_ID=${GH_OAUTH_ID}
+      - GH_OAUTH_SECRET=${GH_OAUTH_SECRET}
+      - POSTGRES_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  postgres_data:
+```
+  </Step>
+  <Step title="Run the service">
+    Go ahead and boot your service:
+    ```shell
+    docker compose up -d
+    ```
+  </Step>
+</Steps>
+
+
+## Running the service
+
+Bravo, you now have a full running service! You can now:
+- navigate to [http://localhost:8050/docs](http://localhost:8050/docs) to check your backend API;
+- navigate to [http://localhost:3000](http://localhost:3000) to check your platform;
+- start VSCode, open the command palette and look for "Quack Companion: Set API endpoint" where you'll need to paste the URL to the API endpoint.
+
+## Additional options
+There are additional options to customize your service, here are a few:
+
+<Card title="Database hosting">
+  Instead of hosting your PostgreSQL database locally, you can use hosting services like [Supabase](https://supabase.com/). You only need to replace the environment variable `POSTGRES_URL` in the backend service of your docker orchestration.
+</Card>
+
+<Card title="Model pipeline">
+  If you don't want to use OpenAI, you can also host locally a more reasonably-sized model locally. We use [Ollama](https://ollama.ai/) to give you this option, and you'll need to specify the environment variables `OLLAMA_ENDPOINT` and `OLLAMA_MODEL` to use this SpeechRecognitionAlternative.
+  If you do, for a good performance/latency balance, we recommend you use one of the following models: `startling-lm:7b-alpha`, `mistral:7b-instruct`. 
+</Card>
+
+<Card title="Frontend hosting">
+  You can also host your frontend on [Vercel](https://vercel.com/). For this, fork our [platform repository](https://github.com/quack-ai/platform/fork) and connect it to Vercel (Add New project, and import git repository).
+</Card>

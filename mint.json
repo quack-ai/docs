@@ -1,32 +1,38 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Quack AI",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png",
+    "href": "https://quackai.com"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#9563FF",
+    "primary": "#9038ff",
     "light": "#AE87FF",
-    "dark": "#0D001D",
+    "dark": "#9038ff",
     "background": {
       "dark": "#090014"
     },
     "anchors": {
-      "from": "#FF7F57",
-      "to": "#9563FF"
+      "from": "#dd57ff",
+      "to": "#9038ff"
     }
+  },
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true,
+    "thumbsRating": true
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "name": "Contact Us",
+      "url": "mailto:hello@quackai.com"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "type": "github",
+    "url": "https://github.com/quack-ai/companion"
   },
   "tabs": [
     {
@@ -38,45 +44,92 @@
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "home/introduction"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://discord.gg/E9rY3bVCWd"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/quack-ai/companion"
+    },
+    {
+      "name": "Status page",
+      "icon": "heart-pulse",
+      "url": "https://status.quackai.com"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "group": "Home",
+      "pages": ["home/introduction", "home/quack"]
     },
     {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+      "group": "Getting started",
+      "pages": ["getting-started/quickstart", "getting-started/self-hosting"]
     },
     {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
+      "group": "Community & support",
+      "pages": ["community/roadmap", "community/contributing", "community/faq", "community/changelog", "community/support"]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Login",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "api-reference/login/request-token-from-github",
+        "api-reference/login/request-token-from-creds"
+      ]
+    },
+    {
+      "group": "Repos",
+      "pages": [
+        "api-reference/repos/fetch-repos",
+        "api-reference/repos/create-repo",
+        "api-reference/repos/get-repo",
+        "api-reference/repos/disable-repo",
+        "api-reference/repos/enable-repo",
+        "api-reference/repos/fetch-guidelines",
+        "api-reference/repos/update-guideline-order",
+        "api-reference/repos/extract-guidelines"
+      ]
+    },
+    {
+      "group": "Guidelines",
+      "pages": [
+        "api-reference/guidelines/fetch-guidelines",
+        "api-reference/guidelines/create-guideline",
+        "api-reference/guidelines/get-guideline",
+        "api-reference/guidelines/update-guideline",
+        "api-reference/guidelines/update-order",
+        "api-reference/guidelines/delete-guideline",
+        "api-reference/guidelines/extract-guideline",
+        "api-reference/guidelines/generate-examples"
+      ]
+    },
+    {
+      "group": "Compute",
+      "pages": [
+        "api-reference/compute/check-code-against-guideline",
+        "api-reference/compute/check-code-against-repo"
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "discord": "https://discord.gg/E9rY3bVCWd",
+    "twitter": "https://twitter.com/quack_ai",
+    "github": "https://github.com/quack-ai",
+    "linkedin": "https://www.linkedin.com/company/quackai"
+  },
+  "openapi": "https://api.quackai.com/api/v1/openapi.json",
+  "api": {
+    "baseUrl": "https://api.quackai.com"
+  },
+  "analytics": {
+    "posthog": {
+      "apiKey": "phc_mU5797H4W1GELY5wmpxxSK9EWZyW4Eev5WZOtuqXMPE",
+      "apiHost": "https://eu.posthog.com"
+    }
   }
 }
