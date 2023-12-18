@@ -1,0 +1,24 @@
+"ext: public":
+  - logo/*
+  - favicon.png
+
+"tab: home":
+  - home/*
+
+"tab: getting-started":
+  - getting-started/*
+
+"tab: community":
+  - community/*
+
+"topic: build":
+  - mint.json
+
+"topic: ci":
+  - .github/*
+
+"topic: documentation":
+  - README.md
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - LICENSE
