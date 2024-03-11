@@ -84,40 +84,33 @@
       "group": "Login",
       "pages": [
         "api-reference/login/request-token-from-github",
-        "api-reference/login/request-token-from-creds"
+        "api-reference/login/request-token-from-creds",
+        "api-reference/login/validate-token"
       ]
     },
     {
       "group": "Repos",
       "pages": [
-        "api-reference/repos/fetch-repos",
-        "api-reference/repos/create-repo",
+        "api-reference/repos/register-repo",
         "api-reference/repos/get-repo",
-        "api-reference/repos/disable-repo",
-        "api-reference/repos/enable-repo",
-        "api-reference/repos/fetch-guidelines",
-        "api-reference/repos/update-guideline-order",
-        "api-reference/repos/extract-guidelines"
+        "api-reference/repos/fetch-repos",
+        "api-reference/repos/delete-repo"
       ]
     },
     {
       "group": "Guidelines",
       "pages": [
-        "api-reference/guidelines/fetch-guidelines",
         "api-reference/guidelines/create-guideline",
         "api-reference/guidelines/get-guideline",
+        "api-reference/guidelines/fetch-guidelines",
         "api-reference/guidelines/update-guideline",
-        "api-reference/guidelines/update-order",
-        "api-reference/guidelines/delete-guideline",
-        "api-reference/guidelines/extract-guideline",
-        "api-reference/guidelines/generate-examples"
+        "api-reference/guidelines/delete-guideline"
       ]
     },
     {
-      "group": "Compute",
+      "group": "Code",
       "pages": [
-        "api-reference/compute/check-code-against-guideline",
-        "api-reference/compute/check-code-against-repo"
+        "api-reference/code/chat"
       ]
     }
   ],

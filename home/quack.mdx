@@ -48,10 +48,10 @@ From an architecture perspective now, here are all the system components:
 ### Server resources
 
 <Card title="Guideline database" icon="database">
-  A PostgreSQL database to store and edit the coding guidelines of each project.
+  A PostgreSQL database to store and edit the coding guidelines of each project, hosted by our friends from [Supabase](https://supabase.com/).
 </Card>
 <Card title="Deep learning models" icon="robot">
-  Either a third-party API like OpenAI or hosted models with coding capabilities.
+  Either our cloud-hosted or locally-run models with coding capabilities, served by [Ollama](https://ollama.com/).
 </Card>
 <Card title="Backend API" icon="globe">
   The gatekeeper to the database and computing resources that manages access. Built with [FastAPI](https://fastapi.tiangolo.com/)
@@ -62,10 +62,10 @@ From an architecture perspective now, here are all the system components:
 
 ### Client applications
 <CardGroup cols={2}>
+<Card title="VSCode extension" icon="gamepad" href="https://marketplace.visualstudio.com/items?itemName=quackai.quack-companion">
+  Bringing code analysis and code completion with relevant context to the developers/contributors.
+</Card>
 <Card title="Frontend platform" icon="gamepad" href="https://app.quackai.com/">
   UI for guideline management, mostly for maintainers.
-</Card>
-<Card title="VSCode extension" icon="gamepad" href="https://marketplace.visualstudio.com/items?itemName=quackai.quack-companion">
-  Bringing code analysis and code completiong with relevant context to the developers/contributors.
 </Card>
 </CardGroup>
